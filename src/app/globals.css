@@ -1,26 +1,716 @@
 @import "tailwindcss";
+@import "tw-animate-css";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-}
+@custom-variant dark (&:is(.dark *));
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+  --font-sans: var(--font-inter);
+  --font-display: var(--font-playfair);
+  --font-mono: var(--font-mono);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar: var(--sidebar);
+  --color-chart-5: var(--chart-5);
+  --color-chart-4: var(--chart-4);
+  --color-chart-3: var(--chart-3);
+  --color-chart-2: var(--chart-2);
+  --color-chart-1: var(--chart-1);
+  --color-ring: var(--ring);
+  --color-input: var(--input);
+  --color-border: var(--border);
+  --color-destructive: var(--destructive);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-accent: var(--accent);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-muted: var(--muted);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-secondary: var(--secondary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-primary: var(--primary);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-popover: var(--popover);
+  --color-card-foreground: var(--card-foreground);
+  --color-card: var(--card);
+
+  /* Brand Colors */
+  --color-brand-50: var(--brand-50);
+  --color-brand-100: var(--brand-100);
+  --color-brand-200: var(--brand-200);
+  --color-brand-300: var(--brand-300);
+  --color-brand-400: var(--brand-400);
+  --color-brand-500: var(--brand-500);
+  --color-brand-600: var(--brand-600);
+  --color-brand-700: var(--brand-700);
+  --color-brand-800: var(--brand-800);
+  --color-brand-900: var(--brand-900);
+
+  /* Radius */
+  --radius-sm: calc(var(--radius) - 4px);
+  --radius-md: calc(var(--radius) - 2px);
+  --radius-lg: var(--radius);
+  --radius-xl: calc(var(--radius) + 4px);
+  --radius-2xl: calc(var(--radius) + 8px);
+  --radius-3xl: calc(var(--radius) + 12px);
+  --radius-4xl: calc(var(--radius) + 16px);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
+:root {
+  --radius: 0.75rem;
+
+  /* FOM Corporate Design - Hausfarbe Grün #00C6B2 */
+  --brand-50: oklch(0.97 0.03 175);
+  --brand-100: oklch(0.94 0.06 175);
+  --brand-200: oklch(0.88 0.10 175);
+  --brand-300: oklch(0.80 0.13 175);
+  --brand-400: oklch(0.75 0.14 175);
+  --brand-500: oklch(0.73 0.14 175);  /* FOM Grün #00C6B2 */
+  --brand-600: oklch(0.65 0.14 175);
+  --brand-700: oklch(0.55 0.13 175);
+  --brand-800: oklch(0.45 0.11 175);
+  --brand-900: oklch(0.35 0.09 175);
+
+  /* FOM Auszeichnungsfarben */
+  --fom-digital: oklch(0.55 0.22 255);  /* Digitales Live-Studium #0071DE */
+  --fom-magazin: oklch(0.45 0.27 300);  /* Online-Magazin #910CC1 */
+  --fom-highlight: oklch(0.85 0.18 90); /* Highlight #F9CB00 */
+
+  /* FOM Hochschulbereichsfarben */
+  --fom-wirtschaft: oklch(0.68 0.20 130);    /* Wirtschaft & Management #77B502 */
+  --fom-psychologie: oklch(0.55 0.25 25);    /* Wirtschaft & Psychologie #E81818 */
+  --fom-recht: oklch(0.72 0.18 75);          /* Wirtschaft & Recht #DD9F1F */
+  --fom-it: oklch(0.58 0.14 230);            /* IT Management #0091C6 */
+  --fom-gesundheit: oklch(0.45 0.27 300);    /* Gesundheit & Soziales #910CC1 */
+  --fom-ingenieur: oklch(0.32 0.12 250);     /* Ingenieurwesen #003A72 */
+
+  /* Success Green (FOM Wirtschaft) */
+  --success: oklch(0.68 0.20 130);
+  --success-foreground: oklch(1 0 0);
+
+  /* Base Colors - Light Mode */
+  --background: oklch(0.99 0.005 175);
+  --foreground: oklch(0.15 0.02 175);
+  --card: oklch(1 0 0);
+  --card-foreground: oklch(0.15 0.02 175);
+  --popover: oklch(1 0 0);
+  --popover-foreground: oklch(0.15 0.02 175);
+  --primary: oklch(0.73 0.14 175);  /* FOM Grün */
+  --primary-foreground: oklch(0.99 0 0);
+  --secondary: oklch(0.96 0.01 175);
+  --secondary-foreground: oklch(0.30 0.05 175);
+  --muted: oklch(0.96 0.01 175);
+  --muted-foreground: oklch(0.50 0.02 175);
+  --accent: oklch(0.94 0.03 175);
+  --accent-foreground: oklch(0.30 0.05 175);
+  --destructive: oklch(0.55 0.25 25);  /* FOM Psychologie Rot */
+  --border: oklch(0.92 0.01 175);
+  --input: oklch(0.92 0.01 175);
+  --ring: oklch(0.73 0.14 175);
+
+  /* Chart Colors - Based on FOM Department Colors */
+  --chart-1: oklch(0.73 0.14 175);  /* FOM Grün */
+  --chart-2: oklch(0.55 0.22 255);  /* Digital Blau */
+  --chart-3: oklch(0.85 0.18 90);   /* Highlight Gelb */
+  --chart-4: oklch(0.45 0.27 300);  /* Magazin Lila */
+  --chart-5: oklch(0.55 0.25 25);   /* Psychologie Rot */
+
+  /* Sidebar */
+  --sidebar: oklch(0.98 0.005 175);
+  --sidebar-foreground: oklch(0.15 0.02 175);
+  --sidebar-primary: oklch(0.73 0.14 175);
+  --sidebar-primary-foreground: oklch(0.99 0 0);
+  --sidebar-accent: oklch(0.94 0.03 175);
+  --sidebar-accent-foreground: oklch(0.30 0.05 175);
+  --sidebar-border: oklch(0.92 0.01 175);
+  --sidebar-ring: oklch(0.73 0.14 175);
+
+  /* Glassmorphism */
+  --glass-bg: oklch(1 0 0 / 0.7);
+  --glass-border: oklch(1 0 0 / 0.2);
+  --glass-shadow: 0 8px 32px oklch(0 0 0 / 0.08);
+
+  /* Premium Shadows */
+  --shadow-xs: 0 1px 2px oklch(0 0 0 / 0.04);
+  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.06), 0 1px 2px oklch(0 0 0 / 0.04);
+  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.06), 0 2px 4px -2px oklch(0 0 0 / 0.04);
+  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.06), 0 4px 6px -4px oklch(0 0 0 / 0.04);
+  --shadow-xl: 0 20px 25px -5px oklch(0 0 0 / 0.06), 0 8px 10px -6px oklch(0 0 0 / 0.04);
+  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.15);
+  --shadow-glow: 0 0 40px oklch(0.73 0.14 175 / 0.15);
+  --shadow-glow-lg: 0 0 60px oklch(0.73 0.14 175 / 0.2);
+}
+
+.dark {
+  /* FOM Brand Colors - Dark Mode (slightly lighter for contrast) */
+  --brand-50: oklch(0.20 0.04 175);
+  --brand-100: oklch(0.25 0.06 175);
+  --brand-200: oklch(0.35 0.09 175);
+  --brand-300: oklch(0.50 0.12 175);
+  --brand-400: oklch(0.65 0.14 175);
+  --brand-500: oklch(0.75 0.14 175);  /* FOM Grün (lighter for dark mode) */
+  --brand-600: oklch(0.80 0.13 175);
+  --brand-700: oklch(0.85 0.11 175);
+  --brand-800: oklch(0.90 0.08 175);
+  --brand-900: oklch(0.95 0.04 175);
+
+  /* Base Colors - Dark Mode */
+  --background: oklch(0.12 0.02 175);
+  --foreground: oklch(0.96 0.01 175);
+  --card: oklch(0.16 0.02 175);
+  --card-foreground: oklch(0.96 0.01 175);
+  --popover: oklch(0.16 0.02 175);
+  --popover-foreground: oklch(0.96 0.01 175);
+  --primary: oklch(0.75 0.14 175);  /* FOM Grün (lighter for contrast) */
+  --primary-foreground: oklch(0.12 0.02 175);
+  --secondary: oklch(0.22 0.02 175);
+  --secondary-foreground: oklch(0.96 0.01 175);
+  --muted: oklch(0.22 0.02 175);
+  --muted-foreground: oklch(0.65 0.02 175);
+  --accent: oklch(0.22 0.03 175);
+  --accent-foreground: oklch(0.96 0.01 175);
+  --destructive: oklch(0.65 0.22 25);
+  --border: oklch(1 0 0 / 0.08);
+  --input: oklch(1 0 0 / 0.12);
+  --ring: oklch(0.75 0.14 175);
+
+  /* Chart Colors - Dark Mode (FOM colors) */
+  --chart-1: oklch(0.75 0.14 175);  /* FOM Grün */
+  --chart-2: oklch(0.60 0.20 255);  /* Digital Blau */
+  --chart-3: oklch(0.85 0.18 90);   /* Highlight Gelb */
+  --chart-4: oklch(0.55 0.25 300);  /* Magazin Lila */
+  --chart-5: oklch(0.65 0.22 25);   /* Psychologie Rot */
+
+  /* Sidebar - Dark Mode */
+  --sidebar: oklch(0.14 0.02 175);
+  --sidebar-foreground: oklch(0.96 0.01 175);
+  --sidebar-primary: oklch(0.75 0.14 175);
+  --sidebar-primary-foreground: oklch(0.12 0.02 175);
+  --sidebar-accent: oklch(0.22 0.03 175);
+  --sidebar-accent-foreground: oklch(0.96 0.01 175);
+  --sidebar-border: oklch(1 0 0 / 0.08);
+  --sidebar-ring: oklch(0.75 0.14 175);
+
+  /* Glassmorphism - Dark Mode */
+  --glass-bg: oklch(0.16 0.02 175 / 0.8);
+  --glass-border: oklch(1 0 0 / 0.08);
+  --glass-shadow: 0 8px 32px oklch(0 0 0 / 0.3);
+
+  /* Premium Shadows - Dark Mode (FOM Grün glow) */
+  --shadow-xs: 0 1px 2px oklch(0 0 0 / 0.2);
+  --shadow-sm: 0 1px 3px oklch(0 0 0 / 0.3), 0 1px 2px oklch(0 0 0 / 0.2);
+  --shadow-md: 0 4px 6px -1px oklch(0 0 0 / 0.3), 0 2px 4px -2px oklch(0 0 0 / 0.2);
+  --shadow-lg: 0 10px 15px -3px oklch(0 0 0 / 0.3), 0 4px 6px -4px oklch(0 0 0 / 0.2);
+  --shadow-xl: 0 20px 25px -5px oklch(0 0 0 / 0.3), 0 8px 10px -6px oklch(0 0 0 / 0.2);
+  --shadow-2xl: 0 25px 50px -12px oklch(0 0 0 / 0.5);
+  --shadow-glow: 0 0 40px oklch(0.75 0.14 175 / 0.2);
+  --shadow-glow-lg: 0 0 60px oklch(0.75 0.14 175 / 0.3);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+
+  html {
+    scroll-behavior: smooth;
+  }
+
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* Premium Focus States */
+  *:focus-visible {
+    @apply outline-none ring-2 ring-ring ring-offset-2 ring-offset-background;
+  }
+
+  /* Smooth Transitions for Theme Changes */
+  *, *::before, *::after {
+    transition-property: background-color, border-color, color, fill, stroke;
+    transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+    transition-duration: 150ms;
+  }
+
+  /* Disable transitions for animations */
+  [class*="animate-"] *, [class*="animate-"] *::before, [class*="animate-"] *::after {
+    transition: none;
   }
 }
 
-body {
-  background: var(--background);
+@layer utilities {
+  /* Glassmorphism Utility Classes */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  .glass-strong {
+    background: var(--glass-bg);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+
+  /* Gradient Utilities */
+  .gradient-brand {
+    background: linear-gradient(135deg, var(--brand-500) 0%, var(--brand-600) 100%);
+  }
+
+  .gradient-brand-soft {
+    background: linear-gradient(135deg, var(--brand-100) 0%, var(--brand-200) 100%);
+  }
+
+  .gradient-text {
+    background: linear-gradient(135deg, var(--brand-400) 0%, var(--brand-600) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Shadow Utilities */
+  .shadow-premium {
+    box-shadow: var(--shadow-lg);
+  }
+
+  .shadow-glow {
+    box-shadow: var(--shadow-glow);
+  }
+
+  .shadow-glow-lg {
+    box-shadow: var(--shadow-glow-lg);
+  }
+
+  /* Hover Glow Effect */
+  .hover-glow {
+    transition: box-shadow 0.3s ease, transform 0.3s ease;
+  }
+
+  .hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+  }
+
+  /* Text Balance for Headlines */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Hide scrollbar but keep functionality */
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* Custom Scrollbar */
+  .scrollbar-premium {
+    scrollbar-width: thin;
+    scrollbar-color: var(--brand-300) transparent;
+  }
+
+  .scrollbar-premium::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+  }
+
+  .scrollbar-premium::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  .scrollbar-premium::-webkit-scrollbar-thumb {
+    background: var(--brand-300);
+    border-radius: 3px;
+  }
+
+  .scrollbar-premium::-webkit-scrollbar-thumb:hover {
+    background: var(--brand-400);
+  }
+
+  /* ===== Touch-Friendly Utilities ===== */
+
+  /* Minimum touch target size (44px as per WCAG) */
+  .touch-target {
+    min-width: 44px;
+    min-height: 44px;
+  }
+
+  .touch-target-sm {
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  /* Touch-friendly spacing */
+  .touch-spacing {
+    padding: 12px;
+    gap: 12px;
+  }
+
+  .touch-spacing-lg {
+    padding: 16px;
+    gap: 16px;
+  }
+
+  /* Disable hover effects on touch devices */
+  @media (hover: none) and (pointer: coarse) {
+    .no-touch-hover:hover {
+      transform: none !important;
+      box-shadow: inherit !important;
+    }
+  }
+
+  /* Larger text for touch devices */
+  @media (pointer: coarse) {
+    .touch-text {
+      font-size: 1rem;
+      line-height: 1.5;
+    }
+  }
+
+  /* Safe area padding for notched devices */
+  .safe-area-inset {
+    padding-left: env(safe-area-inset-left);
+    padding-right: env(safe-area-inset-right);
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  /* Touch-optimized list items */
+  .touch-list-item {
+    min-height: 48px;
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+  }
+}
+
+/* ===== Tablet-Specific Styles ===== */
+
+/* Tablet portrait mode (768px - 1024px with touch) */
+@media (min-width: 768px) and (max-width: 1024px) and (pointer: coarse) {
+  /* Increase default font size slightly */
+  html {
+    font-size: 17px;
+  }
+
+  /* Ensure buttons are touch-friendly */
+  button:not([data-size="xs"]):not([data-size="icon-xs"]) {
+    min-height: 40px;
+  }
+
+  /* Sidebar adjustments for tablets */
+  .tablet-sidebar {
+    position: fixed;
+    z-index: 40;
+    width: 280px;
+    height: 100vh;
+    transform: translateX(-100%);
+    transition: transform 0.3s ease;
+  }
+
+  .tablet-sidebar.open {
+    transform: translateX(0);
+  }
+
+  /* Content area expands when sidebar hidden */
+  .tablet-content {
+    margin-left: 0;
+    width: 100%;
+  }
+
+  /* Bottom toolbar for tablets */
+  .tablet-toolbar {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    z-index: 30;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+}
+
+/* Large tablet / small desktop (1024px - 1280px) */
+@media (min-width: 1024px) and (max-width: 1280px) and (pointer: coarse) {
+  /* Slightly larger touch targets */
+  button {
+    min-height: 38px;
+  }
+}
+
+/* Apple Pencil / Stylus enhancements */
+@media (pointer: fine) and (hover: none) {
+  /* When using stylus on touch device */
+  .pencil-mode .prose {
+    cursor: crosshair;
+  }
+
+  .pencil-mode *::selection {
+    background: var(--brand-200);
+  }
+}
+
+/* Premium Animations */
+@keyframes fade-in {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@keyframes fade-in-up {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fade-in-down {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+@keyframes pulse-soft {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
+@keyframes glow-pulse {
+  0%, 100% {
+    box-shadow: var(--shadow-glow);
+  }
+  50% {
+    box-shadow: var(--shadow-glow-lg);
+  }
+}
+
+.animate-fade-in {
+  animation: fade-in 0.3s ease-out;
+}
+
+.animate-fade-in-up {
+  animation: fade-in-up 0.4s ease-out;
+}
+
+.animate-fade-in-down {
+  animation: fade-in-down 0.4s ease-out;
+}
+
+.animate-scale-in {
+  animation: scale-in 0.3s ease-out;
+}
+
+.animate-shimmer {
+  background: linear-gradient(
+    90deg,
+    var(--muted) 0%,
+    var(--muted-foreground) 50%,
+    var(--muted) 100%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+}
+
+.animate-pulse-soft {
+  animation: pulse-soft 2s ease-in-out infinite;
+}
+
+.animate-glow-pulse {
+  animation: glow-pulse 2s ease-in-out infinite;
+}
+
+/* ===== Studienbrief Content Styling ===== */
+
+.studienbrief-content {
+  /* Better typography for study materials */
+  font-size: 1rem;
+  line-height: 1.75;
+  letter-spacing: -0.01em;
+}
+
+/* Bold headings within content */
+.studienbrief-content strong {
+  font-weight: 600;
   color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  display: inline;
+}
+
+/* Section subheadings styled like FOM materials */
+.studienbrief-content p strong:first-child:only-child,
+.studienbrief-content p > strong:first-child {
+  display: block;
+  font-size: 1.05rem;
+  margin-top: 1.25rem;
+  margin-bottom: 0.5rem;
+  color: var(--foreground);
+}
+
+/* Inline bold stays inline */
+.studienbrief-content p strong:not(:first-child) {
+  display: inline;
+}
+
+/* Lists with proper styling */
+.studienbrief-content ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 1rem 0;
+}
+
+.studienbrief-content ul li {
+  position: relative;
+  padding-left: 1.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.studienbrief-content ul li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+  color: var(--brand-500);
+  font-weight: bold;
+}
+
+/* Numbered lists */
+.studienbrief-content ol {
+  list-style: none;
+  padding-left: 0;
+  margin: 1rem 0;
+  counter-reset: studienbrief-counter;
+}
+
+.studienbrief-content ol li {
+  position: relative;
+  padding-left: 2rem;
+  margin-bottom: 0.5rem;
+  counter-increment: studienbrief-counter;
+}
+
+.studienbrief-content ol li::before {
+  content: counter(studienbrief-counter) ".";
+  position: absolute;
+  left: 0;
+  font-weight: 600;
+  color: var(--brand-500);
+}
+
+/* Nested lists */
+.studienbrief-content ul ul,
+.studienbrief-content ol ol,
+.studienbrief-content ul ol,
+.studienbrief-content ol ul {
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 1rem;
+}
+
+/* Italic for examples and Latin terms */
+.studienbrief-content em {
+  font-style: italic;
+  color: var(--muted-foreground);
+}
+
+/* Code/technical terms */
+.studienbrief-content code {
+  font-family: var(--font-mono);
+  font-size: 0.9em;
+  background: var(--muted);
+  padding: 0.15rem 0.4rem;
+  border-radius: 0.25rem;
+  color: var(--brand-600);
+}
+
+.dark .studienbrief-content code {
+  color: var(--brand-400);
+}
+
+/* Blockquotes for legal citations */
+.studienbrief-content blockquote {
+  border-left: 3px solid var(--brand-500);
+  padding-left: 1rem;
+  margin: 1.5rem 0;
+  background: var(--muted);
+  padding: 1rem 1rem 1rem 1.25rem;
+  border-radius: 0 0.5rem 0.5rem 0;
+  font-style: italic;
+}
+
+.studienbrief-content blockquote p {
+  margin: 0;
+}
+
+/* Horizontal rules */
+.studienbrief-content hr {
+  border: none;
+  height: 1px;
+  background: linear-gradient(90deg, transparent, var(--border), transparent);
+  margin: 2rem 0;
+}
+
+/* Tables */
+.studienbrief-content table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 1.5rem 0;
+  font-size: 0.95rem;
+}
+
+.studienbrief-content th {
+  background: var(--muted);
+  font-weight: 600;
+  text-align: left;
+  padding: 0.75rem 1rem;
+  border-bottom: 2px solid var(--brand-500);
+}
+
+.studienbrief-content td {
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border);
+}
+
+.studienbrief-content tr:hover {
+  background: var(--muted);
 }

@@ -1,36 +1,85 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Digitales Skript
 
-## Getting Started
+Ein webbasiertes Tool für Studenten, um PDFs als interaktive Webseiten zu lesen, mit Text-to-Speech, Notizen und Lernkarten.
 
-First, run the development server:
+## Features (MVP)
+
+- **PDF Upload** - Drag & Drop Upload mit Fortschrittsanzeige
+- **PDF zu Webseite** - Automatische Textextraktion und Kapitelstrukturierung
+- **Document Reader** - Übersichtliches Lesen mit Inhaltsverzeichnis
+- **Text-to-Speech** - Lass dir deine Skripte vorlesen (mit Geschwindigkeits- und Stimmauswahl)
+
+## Tech Stack
+
+- **Frontend**: Next.js 14, React 18, TypeScript
+- **Styling**: Tailwind CSS, shadcn/ui
+- **Backend**: Supabase (Auth, Database, Storage)
+- **PDF Parsing**: pdf-parse
+
+## Setup
+
+### 1. Supabase Projekt erstellen
+
+1. Erstelle ein neues Projekt auf [supabase.com](https://supabase.com)
+2. Gehe zu **SQL Editor** und führe das Schema aus `supabase-schema.sql` aus
+3. Gehe zu **Storage** und stelle sicher, dass der `documents` Bucket erstellt wurde
+
+### 2. Environment Variables
+
+Kopiere `.env.local.example` zu `.env.local` und fülle die Werte aus:
+
+```bash
+cp .env.local.example .env.local
+```
+
+Hole die Werte aus deinem Supabase Dashboard unter **Settings > API**:
+- `NEXT_PUBLIC_SUPABASE_URL`
+- `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+- `SUPABASE_SERVICE_ROLE_KEY`
+
+### 3. Installation
+
+```bash
+npm install
+```
+
+### 4. Development Server
 
 ```bash
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Öffne [http://localhost:3000](http://localhost:3000) im Browser.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Projektstruktur
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+```
+src/
+├── app/                    # Next.js App Router
+│   ├── api/parse/         # PDF Parsing API
+│   ├── auth/callback/     # Auth Callback
+│   ├── documents/         # Dokument-Übersicht & Reader
+│   ├── login/             # Login-Seite
+│   └── signup/            # Registrierung
+├── components/
+│   ├── documents/         # Dokument-Komponenten
+│   ├── layout/            # Layout-Komponenten
+│   ├── reader/            # Reader-Komponenten
+│   └── ui/                # shadcn/ui Komponenten
+└── lib/
+    ├── pdf/               # PDF Parsing Logic
+    └── supabase/          # Supabase Client & Types
+```
 
-## Learn More
+## Nächste Schritte (Post-MVP)
 
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- [ ] Notizen & Markierungen (Phase 5)
+- [ ] Lernkarten mit KI-Generierung (Phase 6)
+- [ ] Fortschritts-Tracking (Phase 7)
+- [ ] Dark Mode & Polish (Phase 8)
 
 ## Deploy on Vercel
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new).
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Make sure to add all environment variables in the Vercel project settings.
