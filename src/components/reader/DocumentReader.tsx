@@ -45,6 +45,7 @@ import { useNotes, type Note } from '@/hooks/useNotes'
 import { useFlashcards } from '@/hooks/useFlashcards'
 import { useReadingProgress } from '@/hooks/useReadingProgress'
 import { TabletModeProvider, useTabletMode } from '@/contexts/TabletModeContext'
+import { TabletSidebar } from '@/components/layout/TabletSidebar'
 import { DeviceModeSelector } from './DeviceModeSelector'
 import { cn } from '@/lib/utils'
 import {
@@ -60,6 +61,7 @@ import {
   Bookmark,
   ChevronUp,
   ChevronDown,
+  Menu,
 } from 'lucide-react'
 import type { Document, Section } from '@/lib/supabase/types'
 
@@ -72,7 +74,10 @@ function DocumentReaderContent({ document, sections }: DocumentReaderProps) {
   const [activeSection, setActiveSection] = useState<string | null>(
     sections.length > 0 ? sections[0].id : null
   )
-  const [isSidebarOpen, setIsSidebarOpen] = useState(true)
+  const [isSidebarOpen, setIsSidebarOpen] = useState(() => {
+    if (typeof window === 'undefined') return true
+    return window.innerWidth >= 768 // md breakpoint - closed on mobile
+  })
   const [speakingParagraph, setSpeakingParagraph] = useState<number | null>(null)
   const [showHighlightSidebar, setShowHighlightSidebar] = useState(false)
   const [showNotesPanel, setShowNotesPanel] = useState(false)
@@ -419,17 +424,17 @@ function DocumentReaderContent({ document, sections }: DocumentReaderProps) {
     return () => window.removeEventListener('keydown', handleKeyDown)
   }, [])
 
-  // Show continue reading prompt on mount if there's a saved position
-  useEffect(() => {
-    if (lastPosition && !hasShownPromptRef.current) {
-      // Small delay to let the page render first
-      const timer = setTimeout(() => {
-        setShowContinuePrompt(true)
-        hasShownPromptRef.current = true
-      }, 500)
-      return () => clearTimeout(timer)
-    }
-  }, [lastPosition])
+  // Continue reading prompt disabled - user requested removal
+  // The position is still saved, but the prompt won't appear automatically
+  // useEffect(() => {
+  //   if (lastPosition && !hasShownPromptRef.current) {
+  //     const timer = setTimeout(() => {
+  //       setShowContinuePrompt(true)
+  //       hasShownPromptRef.current = true
+  //     }, 500)
+  //     return () => clearTimeout(timer)
+  //   }
+  // }, [lastPosition])
 
   // Save reading position when active section changes
   useEffect(() => {
@@ -719,10 +724,11 @@ function DocumentReaderContent({ document, sections }: DocumentReaderProps) {
 
   return (
     <div className="flex h-[calc(100vh-57px)]">
-      {/* Sidebar with Table of Contents - always visible on left */}
+      {/* Sidebar with Table of Contents - hidden on mobile, visible on md+ */}
       <aside
         className={cn(
-          'border-r bg-muted/30 transition-all duration-300 flex flex-col',
+          'border-r bg-muted/30 transition-all duration-300 flex-col',
+          'hidden md:flex', // Hide on mobile, show on md+
           isSidebarOpen
             ? isTabletMode ? 'w-64' : 'w-72'
             : 'w-0 overflow-hidden'
@@ -800,8 +806,11 @@ function DocumentReaderContent({ document, sections }: DocumentReaderProps) {
                       variant="ghost"
                       size={isTabletMode ? 'touch-sm' : 'sm'}
                       onClick={() => setIsSidebarOpen(!isSidebarOpen)}
+                      className="gap-2"
                     >
-                      {isSidebarOpen ? '◀' : '▶'} Inhalt
+                      <Menu className="w-4 h-4 md:hidden" />
+                      <span className="hidden md:inline">{isSidebarOpen ? '◀' : '▶'}</span>
+                      Inhalt
                     </Button>
                   </div>
 
@@ -1287,8 +1296,46 @@ function DocumentReaderContent({ document, sections }: DocumentReaderProps) {
         isDeleting={sectionManagement.isDeleting}
       />
 
-      {/* MiniMap - Fixed position on right side */}
-      <div className="fixed right-4 top-1/2 -translate-y-1/2 z-30">
+      {/* Mobile: TableOfContents as overlay sidebar */}
+      <div className="md:hidden">
+        <TabletSidebar
+          isOpen={isSidebarOpen}
+          onClose={() => setIsSidebarOpen(false)}
+          position="left"
+          width={280}
+          header={
+            <h2 className="font-semibold text-lg truncate">{document.title}</h2>
+          }
+        >
+          <div className="p-4">
+            <Link href="/documents">
+              <Button variant="ghost" size="sm" className="mb-4 w-full justify-start">
+                ← Zurück zur Übersicht
+              </Button>
+            </Link>
+            <p className="text-sm text-muted-foreground mb-4">
+              {sections.length} Abschnitte
+            </p>
+          </div>
+          <TableOfContents
+            sections={sections}
+            activeSection={activeSection}
+            onSelectSection={(id) => {
+              scrollToSection(id)
+              setIsSidebarOpen(false)
+            }}
+            readProgress={readProgress}
+            completedSections={completedSections}
+            onMarkCompleted={handleMarkChapterCompleted}
+            highlightCounts={highlightCounts}
+            noteCounts={noteCounts}
+            isTabletMode={true}
+          />
+        </TabletSidebar>
+      </div>
+
+      {/* MiniMap - Fixed position on right side, hidden on mobile */}
+      <div className="hidden md:block fixed right-4 top-1/2 -translate-y-1/2 z-30">
         <MiniMap
           sections={localSections}
           activeSectionId={activeSection}
