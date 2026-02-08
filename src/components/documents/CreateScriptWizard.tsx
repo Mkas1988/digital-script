@@ -200,11 +200,11 @@ export function CreateScriptWizard({ isOpen, onClose, modules = [] }: CreateScri
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.95, y: 20 }}
           transition={{ type: 'spring', duration: 0.5 }}
-          className="w-full max-w-2xl"
+          className="w-full max-w-[calc(100vw-2rem)] sm:max-w-xl lg:max-w-2xl"
         >
           <GlassCard variant="elevated" className="overflow-hidden">
             {/* Header */}
-            <div className="flex items-center justify-between p-6 border-b border-border/50">
+            <div className="flex items-center justify-between p-4 sm:p-6 border-b border-border/50">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-xl bg-gradient-to-br from-brand-500/20 to-brand-600/20 flex items-center justify-center">
                   <Sparkles className="w-5 h-5 text-brand-400" />
@@ -229,7 +229,7 @@ export function CreateScriptWizard({ isOpen, onClose, modules = [] }: CreateScri
             </div>
 
             {/* Progress indicator */}
-            <div className="px-6 py-4 border-b border-border/50">
+            <div className="px-4 sm:px-6 py-3 sm:py-4 border-b border-border/50">
               <div className="flex items-center justify-between">
                 {WIZARD_STEPS.map((step, index) => (
                   <div
@@ -283,7 +283,7 @@ export function CreateScriptWizard({ isOpen, onClose, modules = [] }: CreateScri
             </div>
 
             {/* Content */}
-            <div className="p-6 min-h-[320px]">
+            <div className="p-4 sm:p-6 min-h-[280px] sm:min-h-[320px]">
               <AnimatePresence mode="wait">
                 {/* Step 1: Basics */}
                 {currentStep === 0 && (
@@ -339,7 +339,7 @@ export function CreateScriptWizard({ isOpen, onClose, modules = [] }: CreateScri
                       <Label className="text-base">
                         Womit möchten Sie beginnen?
                       </Label>
-                      <div className="grid grid-cols-2 gap-3">
+                      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                         {SECTION_TYPE_OPTIONS.map((option) => (
                           <button
                             key={option.value}
@@ -503,21 +503,23 @@ export function CreateScriptWizard({ isOpen, onClose, modules = [] }: CreateScri
             </div>
 
             {/* Footer */}
-            <div className="flex items-center justify-between p-6 border-t border-border/50">
+            <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3 p-4 sm:p-6 border-t border-border/50">
               <Button
                 variant="ghost"
                 onClick={handleBack}
                 disabled={currentStep === 0 || isCreating}
+                className="order-last sm:order-first"
               >
                 <ChevronLeft className="w-4 h-4 mr-2" />
                 Zurück
               </Button>
 
-              <div className="flex items-center gap-3">
+              <div className="flex flex-col-reverse sm:flex-row items-stretch sm:items-center gap-2 sm:gap-3">
                 <Button
                   variant="outline"
                   onClick={onClose}
                   disabled={isCreating}
+                  className="w-full sm:w-auto"
                 >
                   Abbrechen
                 </Button>
@@ -527,6 +529,7 @@ export function CreateScriptWizard({ isOpen, onClose, modules = [] }: CreateScri
                     variant="premium"
                     onClick={handleNext}
                     disabled={!canProceed()}
+                    className="w-full sm:w-auto"
                   >
                     Weiter
                     <ChevronRight className="w-4 h-4 ml-2" />
@@ -536,6 +539,7 @@ export function CreateScriptWizard({ isOpen, onClose, modules = [] }: CreateScri
                     variant="premium"
                     onClick={handleCreate}
                     disabled={!canProceed() || isCreating}
+                    className="w-full sm:w-auto"
                   >
                     {isCreating ? (
                       <>

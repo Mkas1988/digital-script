@@ -64,7 +64,7 @@ export function LandingStats() {
       initial="initial"
       whileInView="animate"
       viewport={{ once: true, margin: '-100px' }}
-      className="grid grid-cols-2 md:grid-cols-4 gap-8"
+      className="grid grid-cols-2 md:grid-cols-4 gap-4 sm:gap-6 lg:gap-8"
     >
       {stats.map((stat, index) => (
         <motion.div
@@ -131,13 +131,13 @@ export function LandingFeatures() {
       initial="initial"
       whileInView="animate"
       viewport={{ once: true, margin: '-100px' }}
-      className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
+      className="grid md:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6"
     >
       {features.map((feature, index) => (
         <motion.div key={feature.title} variants={staggerItem}>
           <GlassCard
             variant="interactive"
-            className="h-full p-6 group"
+            className="h-full p-4 sm:p-6 group"
           >
             <div className={`w-12 h-12 rounded-xl bg-gradient-to-br ${feature.gradient} flex items-center justify-center mb-4 shadow-lg group-hover:scale-110 transition-transform`}>
               <feature.icon className="w-6 h-6 text-white" />

@@ -921,7 +921,7 @@ function DocumentReaderContent({ document, sections }: DocumentReaderProps) {
 
               {/* Content sections */}
               <div className={cn(
-                "max-w-3xl mx-auto px-8 py-12 mt-8",
+                "max-w-3xl mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8 lg:py-12 mt-4 sm:mt-8",
                 (showHighlightSidebar || showNotesPanel) && "lg:mr-0 lg:max-w-none lg:pr-4"
               )}>
               {/* Add button at top (only in author mode) */}

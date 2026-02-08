@@ -312,7 +312,7 @@ export function ScriptManagementPanel({
             'hover:bg-muted/50 cursor-pointer'
           )}
         >
-          <GripVertical className="w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-50 cursor-grab" />
+          <GripVertical className="hidden sm:block w-4 h-4 text-muted-foreground opacity-0 group-hover:opacity-50 cursor-grab" />
 
           {/* Progress circle indicator */}
           <div className="relative w-9 h-9 flex-shrink-0">
@@ -408,7 +408,7 @@ export function ScriptManagementPanel({
               <Button
                 variant="ghost"
                 size="sm"
-                className="h-8 w-8 p-0 opacity-0 group-hover:opacity-100"
+                className="h-8 w-8 p-0 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
                 onClick={(e) => e.preventDefault()}
               >
                 <MoreVertical className="h-4 w-4" />
@@ -586,7 +586,7 @@ export function ScriptManagementPanel({
               </div>
               {moduleProgressStats.totalSections > 0 && (
                 <div className="flex items-center gap-2 mt-1">
-                  <div className="flex-1 h-1.5 bg-muted/50 rounded-full overflow-hidden max-w-[200px]">
+                  <div className="flex-1 h-1.5 bg-muted/50 rounded-full overflow-hidden max-w-[120px] sm:max-w-[200px]">
                     <div
                       className={cn(
                         'h-full rounded-full transition-all duration-500',

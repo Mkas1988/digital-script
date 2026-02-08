@@ -137,7 +137,7 @@ export function LearningDashboard() {
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
-        className="rounded-2xl border bg-gradient-to-br from-brand-500/5 via-background to-background p-6"
+        className="rounded-2xl border bg-gradient-to-br from-brand-500/5 via-background to-background p-4 sm:p-6"
       >
         <div className="flex flex-col md:flex-row md:items-center gap-6">
           <ProgressRing progress={stats.progress.progressPercent} size={100} strokeWidth={10} />
@@ -185,7 +185,7 @@ export function LearningDashboard() {
       </motion.div>
 
       {/* Stats Grid */}
-      <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 sm:gap-4">
         <StatCard
           title="Markierungen"
           value={stats.annotations.highlights}

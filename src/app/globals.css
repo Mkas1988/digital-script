@@ -394,6 +394,72 @@
     display: flex;
     align-items: center;
   }
+
+  /* ===== Responsive Helper Utilities ===== */
+
+  /* Responsive Container Padding */
+  .container-responsive {
+    @apply px-4 sm:px-6 lg:px-8;
+  }
+
+  /* Responsive Card Padding */
+  .card-responsive {
+    @apply p-3 sm:p-4 lg:p-6;
+  }
+
+  /* Responsive Gap */
+  .gap-responsive {
+    @apply gap-3 sm:gap-4 lg:gap-6;
+  }
+
+  /* Responsive Grid Gaps */
+  .grid-gap-responsive {
+    @apply gap-3 sm:gap-4 lg:gap-6;
+  }
+
+  /* Responsive Text Sizes */
+  .text-responsive-sm {
+    @apply text-sm sm:text-base;
+  }
+
+  .text-responsive-base {
+    @apply text-base sm:text-lg;
+  }
+
+  .text-responsive-lg {
+    @apply text-lg sm:text-xl lg:text-2xl;
+  }
+
+  .text-responsive-xl {
+    @apply text-xl sm:text-2xl lg:text-3xl;
+  }
+
+  /* Responsive max-width for dialogs/modals */
+  .dialog-responsive {
+    @apply w-full max-w-[calc(100vw-2rem)] sm:max-w-md;
+  }
+
+  .dialog-responsive-lg {
+    @apply w-full max-w-[calc(100vw-2rem)] sm:max-w-lg lg:max-w-xl;
+  }
+
+  /* Hide on mobile, show on tablet+ */
+  .tablet-up {
+    @apply hidden md:flex;
+  }
+
+  .tablet-up-block {
+    @apply hidden md:block;
+  }
+
+  /* Show only on mobile */
+  .mobile-only {
+    @apply flex md:hidden;
+  }
+
+  .mobile-only-block {
+    @apply block md:hidden;
+  }
 }
 
 /* ===== Tablet-Specific Styles ===== */
